@@ -1,0 +1,22 @@
+{
+  "name": "authenticator_node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "nodemonConfig": {
+    "ignore": [
+      "database.json",
+      "*.log"
+    ]
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "lowdb": "^7.0.1"
+  }
+}

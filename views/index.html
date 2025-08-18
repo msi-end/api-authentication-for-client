@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Dashboard - Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary-color: #64748b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --border-color: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Login Overlay */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 420px;
+            margin: 2rem;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 15px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .login-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            width: 100%;
+            padding: 1rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            height: var(--header-height);
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        .header-search {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            width: 300px;
+            font-size: 0.9rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notifications {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .user-menu:hover {
+            background: var(--light-color);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            bottom: 0;
+            overflow-y: auto;
+            z-index: 50;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .sidebar-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-section-title {
+            padding: 0 1.5rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .nav-item:hover {
+            color: var(--primary-color);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+            background: rgba(59, 130, 246, 0.1);
+            border-right: 3px solid var(--primary-color);
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            margin-top: var(--header-height);
+            padding: 2rem;
+            min-height: calc(100vh - var(--header-height));
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--primary-color);
+        }
+
+        .breadcrumb-separator {
+            color: var(--text-secondary);
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .stat-change.positive {
+            color: var(--success-color);
+        }
+
+        .stat-change.negative {
+            color: var(--danger-color);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: 1rem;
+        }
+
+        .service-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .service-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+        }
+
+        .service-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-features li {
+            padding: 0.25rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            color: var(--success-color);
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+
+        /* API Keys */
+        .api-key-list {
+            margin-top: 1.5rem;
+        }
+
+        .api-key-item {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .api-key-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .api-key-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .api-key-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .api-key-value {
+            background: var(--light-color);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            word-break: break-all;
+            margin-bottom: 1rem;
+        }
+
+        .api-key-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .api-key-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .search-input {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 1rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .search-input {
+                width: 150px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utilities */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-success {
+            color: var(--success-color);
+        }
+
+        .text-danger {
+            color: var(--danger-color);
+        }
+
+        .text-warning {
+            color: var(--warning-color);
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success-color);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Overlay -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">A</div>
+                <h1 class="login-title">Welcome Back</h1>
+                <p class="login-subtitle">Sign in to your dashboard</p>
+            </div>
+            
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input class="form-input" type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-input" type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    Sign In
+                </button>
+            </form>
+            
+            <div id="loginError" class="toast error hidden" style="position: relative; top: auto; right: auto; transform: none; margin-top: 1rem;">
+                Invalid credentials. Please try again.
+            </div>
+            
+            <p style="text-align: center; margin-top: 1.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                Demo credentials: <strong>admin</strong> / <strong>password123</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                <div class="header-search">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Search...">
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <div class="notifications">
+                    <span style="font-size: 1.2rem; cursor: pointer;">🔔</span>
+                    <div class="notification-badge">3</div>
+                </div>
+                
+                <div class="user-menu" onclick="showUserMenu()">
+                    <div class="user-avatar">A</div>
+                    <div>
+                        <div style="font-weight: 500; font-size: 0.9rem;">Admin User</div>
+                        <div style="font-size: 0.75rem; color: var(--text-secondary);">Administrator</div>
+                    </div>
+                    <span style="font-size: 0.8rem;">▼</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <div class="sidebar-logo-icon">A</div>
+                    <span>AdminPanel</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <button class="nav-item active" onclick="showSection('dashboard')">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard</span>
+                    </button>
+                    <button class="nav-item" onclick="showSection('services')">
+                        <span class="nav-icon">🛍️</span>
+                        <span>Services</span>
+                    </button>
+                    <button class="nav-item" onclick="showSection('api-keys')">
+                        <span class="nav-icon">🔑</span>
+                        <span>API Keys</span>
+                    </button>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Management</div>
+                    <button class="nav-item" onclick="showSection('analytics')">
+                        <span class="nav-icon">📈</span>
+                        <span>Analytics</span>
+                    </button>
+                    <button class="nav-item" onclick="showSection('billing')">
+                        <span class="nav-icon">💳</span>
+                        <span>Billing</span>
+                    </button>
+                    <button class="nav-item" onclick="showSection('settings')">
+                        <span class="nav-icon">⚙️</span>
+                        <span>Settings</span>
+                    </button>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Account</div>
+                    <button class="nav-item" onclick="showSection('profile')">
+                        <span class="nav-icon">👤</span>
+                        <span>Profile</span>
+                    </button>
+                    <button class="nav-item" onclick="showSection('support')">
+                        <span class="nav-icon">💬</span>
+                        <span>Support</span>
+                    </button>
+                    <button class="nav-item" onclick="logout()">
+                        <span class="nav-icon">🚪</span>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <div class="content-section active" id="dashboard-section">
+                <div class="breadcrumb">
+                    <a href="#">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span>Dashboard</span>
+                </div>
+                
+                <div class="page-header">
+                    <h1 class="page-title">Dashboard Overview</h1>
+                    <p class="page-subtitle">Welcome back! Here's what's happening with your services.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">1,247</div>
+                        <div class="stat-label">API Requests Today</div>
+                        <div class="stat-change positive">
+                            <span>↗</span>
+                            <span>+12.5% from yesterday</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value">$2,890</div>
+                        <div class="stat-label">Monthly Revenue</div>
+                        <div class="stat-change positive">
+                            <span>↗</span>
+                            <span>+8.2% from last month</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Active Services</div>
+                        <div class="stat-change positive">
+                            <span>↗</span>
+                            <span>+2 this month</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-value">99.9%</div>
+                        <div class="stat-label">Uptime</div>
+                        <div class="stat-change positive">
+                            <span>↗</span>
+                            <span>Above SLA target</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-top: 2rem;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Recent Activity</h3>
+                        </div>
+                        <div class="card-body">
+                            <div style="space-y: 1rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border-color);">
+                                    <div>
+                                        <div style="font-weight: 500;">New API key generated</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Professional API service</div>
+                                    </div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">2 hours ago</div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border-color);">
+                                    <div>
+                                        <div style="font-weight: 500;">Service upgraded</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Basic → Professional</div>
+                                    </div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">1 day ago</div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
+                                    <div>
+                                        <div style="font-weight: 500;">Payment processed</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">$99.00 for Professional plan</div>
+                                    </div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">3 days ago</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Quick Actions</h3>
+                        </div>
+                        <div class="card-body">
+                            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                <button class="btn btn-primary" onclick="showSection('api-keys'); generateApiKey();">
+                                    Generate API Key
+                                </button>
+                                <button class="btn btn-outline" onclick="showSection('services')">
+                                    Browse Services
+                                </button>
+                                <button class="btn btn-outline" onclick="showSection('billing')">
+                                    View Billing
+                                </button>
+                                <button class="btn btn-outline" onclick="showSection('support')">
+                                    Get Support
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div class="content-section" id="services-section">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showSection('dashboard')">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span>Services</span>
+                </div>
+                
+                <div class="page-header">
+                    <h1 class="page-title">Service Marketplace</h1>
+                    <p class="page-subtitle">Choose the perfect plan for your API needs</p>
+                </div>
+
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-header">
+                            <h3 class="service-title">Starter Plan</h3>
+                        </div>
+                        <div class="service-price">$29<span style="font-size: 1rem; font-weight: normal; color: var(--text-secondary);">/month</span></div>
+                        <div class="service-description">Perfect for small projects and development testing</div>
+                        <ul class="service-features">
+                            <li>10,000 API requests/month</li>
+                            <li>Basic support via email</li>
+                            <li>Standard rate limits</li>
+                            <li>99.5% uptime SLA</li>
+                            <li>API documentation access</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="purchaseService('starter', 29)">Choose Starter</button>
+                    </div>
+                    
+                    <div class="service-card" style="border: 2px solid var(--primary-color); position: relative;">
+                        <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--primary-color); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">MOST POPULAR</div>
+                        <div class="service-header">
+                            <h3 class="service-title">Professional</h3>
+                        </div>
+                        <div class="service-price">$99<span style="font-size: 1rem; font-weight: normal; color: var(--text-secondary);">/month</span></div>
+                        <div class="service-description">Ideal for growing businesses and production applications</div>
+                        <ul class="service-features">
+                            <li>100,000 API requests/month</li>
+                            <li>Priority support & live chat</li>
+                            <li>Enhanced rate limits</li>
+                            <li>99.9% uptime SLA</li>
+                            <li>Advanced analytics dashboard</li>
+                            <li>Webhook support</li>
+                            <li>Custom integrations</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="purchaseService('professional', 99)">Choose Professional</button>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-header">
+                            <h3 class="service-title">Enterprise</h3>
+                        </div>
+                        <div class="service-price">$499<span style="font-size: 1rem; font-weight: normal; color: var(--text-secondary);">/month</span></div>
+                        <div class="service-description">For large-scale applications with demanding requirements</div>
+                        <ul class="service-features">
+                            <li>Unlimited API requests</li>
+                            <li>24/7 dedicated support</li>
+                            <li>No rate limits</li>
+                            <li>99.99% uptime SLA</li>
+                            <li>Custom reporting</li>
+                            <li>White-label options</li>
+                            <li>On-premise deployment</li>
+                            <li>Custom development</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="purchaseService('enterprise', 499)">Contact Sales</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Keys Section -->
+            <div class="content-section" id="api-keys-section">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showSection('dashboard')">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span>API Keys</span>
+                </div>
+                
+                <div class="page-header">
+                    <h1 class="page-title">API Keys Management</h1>
+                    <p class="page-subtitle">Generate and manage your API keys for service access</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Your API Keys</h3>
+                        <button class="btn btn-primary" onclick="generateApiKey()">
+                            <span>+</span> Generate New Key
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="api-key-list" id="apiKeysList">
+                            <!-- API keys will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Section -->
+            <div class="content-section" id="analytics-section">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showSection('dashboard')">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span>Analytics</span>
+                </div>
+                
+                <div class="page-header">
+                    <h1 class="page-title">Analytics & Insights</h1>
+                    <p class="page-subtitle">Detailed insights into your API usage and performance</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">API Usage Trends</h3>
+                        </div>
+                        <div class="card-body">
+                            <div style="height: 200px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); background: var(--light-color); border-radius: 8px;">
+                                📈 Usage Chart Placeholder
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Response Times</h3>
+                        </div>
+                        <div class="card-body">
+                            <div style="height: 200px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); background: var(--light-color); border-radius: 8px;">
+                                ⚡ Performance Chart Placeholder
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Usage Statistics</h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--primary-color);">847,392</div>
+                                <div style="color: var(--text-secondary);">Total Requests</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--success-color);">98.7%</div>
+                                <div style="color: var(--text-secondary);">Success Rate</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--warning-color);">145ms</div>
+                                <div style="color: var(--text-secondary);">Avg Response Time</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--text-secondary);">23</div>
+                                <div style="color: var(--text-secondary);">Error Count</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Billing Section -->
+            <div class="content-section" id="billing-section">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showSection('dashboard')">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span>Billing</span>
+                </div>
+                
+                <div class="page-header">
+                    <h1 class="page-title">Billing & Payments</h1>
+                    <p class="page-subtitle">Manage your subscription and payment methods</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+                    <div>
+                        <div class="card" style="margin-bottom: 2rem;">
+                            <div class="card-header">
+                                <h3 class="card-title">Current Subscription</h3>
+                            </div>
+                            <div class="card-body">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <div>
+                                        <div style="font-size: 1.25rem; font-weight: 600;">Professional Plan</div>
+                                        <div style="color: var(--text-secondary);">Active until March 18, 2025</div>
+                                    </div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">$99/month</div>
+                                </div>
+                                <div style="display: flex; gap: 1rem;">
+                                    <button class="btn btn-outline">Change Plan</button>
+                                    <button class="btn btn-danger">Cancel Subscription</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Payment History</h3>
+                            </div>
+                            <div class="card-body">
+                                <div style="overflow-x: auto;">
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <thead>
+                                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                                <th style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Date</th>
+                                                <th style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Description</th>
+                                                <th style="text-align: right; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Amount</th>
+                                                <th style="text-align: center; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                                <td style="padding: 0.75rem;">Feb 18, 2025</td>
+                                                <td style="padding: 0.75rem;">Professional Plan - Monthly</td>
+                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">$99.00</td>
+                                                <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status status-active">Paid</span></td>
+                                            </tr>
+                                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                                <td style="padding: 0.75rem;">Jan 18, 2025</td>
+                                                <td style="padding: 0.75rem;">Professional Plan - Monthly</td>
+                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">$99.00</td>
+                                                <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status status-active">Paid</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 0.75rem;">Dec 18, 2024</td>
+                                                <td style="padding: 0.75rem;">Starter Plan - Monthly</td>
+                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">$29.00</td>
+                                                <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status status-active">Paid</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="card" style="margin-bottom: 2rem;">
+                            <div class="card-header">
+                                <h3 class="card-title">Usage This Month</h3>
+                            </div>
+                            <div class="card-body">
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <span>API Requests</span>
+                                        <span>73,847 / 100,000</span>
+                                    </div>
+                                    <div style="background: var(--border-color); height: 8px; border-radius: 4px; overflow: hidden;">
+                                        <div style="background: var(--primary-color); height: 100%; width: 73.8%; border-radius: 4px;"></div>
+                                    </div>
+                                </div>
+                                
+                                <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                                    You've used 73.8% of your monthly quota
+                                </div>
+                                
+                                <button class="btn btn-outline" style="width: 100%;">Upgrade Plan</button>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Payment Method</h3>
+                            </div>
+                            <div class="card-body">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                    <div style="width: 40px; height: 25px; background: var(--primary-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7rem; font-weight: bold;">VISA</div>
+                                    <div>
+                                        <div style="font-weight: 500;">•••• •••• •••• 4242</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Expires 12/27</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline" style="width: 100%;">Update Payment Method</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="content-section" id="settings-section">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showSection('dashboard')">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span>Settings</span>
+                </div>
+                
+                <div class="page-header">
+                    <h1 class="page-title">Settings</h1>
+                    <p class="page-subtitle">Manage your account preferences and configurations</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">API Configuration</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="form-label">Rate Limiting</label>
+                                <select class="form-input">
+                                    <option>Standard (100 requests/minute)</option>
+                                    <option>Conservative (50 requests/minute)</option>
+                                    <option>Aggressive (200 requests/minute)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Default Response Format</label>
+                                <select class="form-input">
+                                    <option>JSON</option>
+                                    <option>XML</option>
+                                    <option>CSV</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <input type="checkbox" style="margin-right: 0.5rem;"> Enable API versioning
+                                </label>
+                            </div>
+                            
+                            <button class="btn btn-primary">Save API Settings</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Security Settings</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <input type="checkbox" style="margin-right: 0.5rem;" checked> Two-factor authentication
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <input type="checkbox" style="margin-right: 0.5rem;" checked> Login notifications
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <input type="checkbox" style="margin-right: 0.5rem;"> IP whitelist restriction
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Session timeout (minutes)</label>
+                                <input type="number" class="form-input" value="30" min="5" max="480">
+                            </div>
+                            
+                            <button class="btn btn-primary">Save Security Settings</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin-top: 2rem;">
+                    <div class="card-header">
+                        <h3 class="card-title">Notification Preferences</h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                            <div>
+                                <h4 style="margin-bottom: 1rem; font-weight: 600;">Email Notifications</h4>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <input type="checkbox" style="margin-right: 0.5rem;" checked> Service updates
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <input type="checkbox" style="margin-right: 0.5rem;" checked> Billing notifications
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <input type="checkbox" style="margin-right: 0.5rem;"> Marketing updates
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 style="margin-bottom: 1rem; font-weight: 600;">API Alerts</h4>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <input type="checkbox" style="margin-right: 0.5rem;" checked> Rate limit warnings
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <input type="checkbox" style="margin-right: 0.5rem;" checked> Error rate spikes
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <input type="checkbox" style="margin-right: 0.5rem;"> Usage threshold alerts
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary" style="margin-top: 1rem;">Save Notification Preferences</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Section -->
+            <div class="content-section" id="profile-section">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showSection('dashboard')">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span>Profile</span>
+                </div>
+                
+                <div class="page-header">
+                    <h1 class="page-title">Profile Settings</h1>
+                    <p class="page-subtitle">Manage your personal information and preferences</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 300px; gap: 2rem;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Personal Information</h3>
+                        </div>
+                        <div class="card-body">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div class="form-group">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-input" value="John">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-input" value="Administrator">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-input" value="admin@example.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Company</label>
+                                <input type="text" class="form-input" value="Tech Solutions Inc.">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Job Title</label>
+                                <input type="text" class="form-input" value="System Administrator">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-input" value="+1 (555) 123-4567">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Timezone</label>
+                                <select class="form-input">
+                                    <option>UTC-08:00 (Pacific Standard Time)</option>
+                                    <option>UTC-05:00 (Eastern Standard Time)</option>
+                                    <option>UTC+00:00 (Greenwich Mean Time)</option>
+                                </select>
+                            </div>
+                            
+                            <button class="btn btn-primary">Update Profile</button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="card" style="margin-bottom: 2rem;">
+                            <div class="card-header">
+                                <h3 class="card-title">Profile Picture</h3>
+                            </div>
+                            <div class="card-body" style="text-align: center;">
+                                <div class="user-avatar" style="width: 80px; height: 80px; font-size: 2rem; margin: 0 auto 1rem;">A</div>
+                                <button class="btn btn-outline" style="width: 100%; margin-bottom: 0.5rem;">Upload New Picture</button>
+                                <button class="btn" style="width: 100%; background: transparent; color: var(--danger-color);">Remove Picture</button>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Account Status</h3>
+                            </div>
+                            <div class="card-body">
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="font-weight: 500; margin-bottom: 0.25rem;">Account Type</div>
+                                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Professional</div>
+                                </div>
+                                
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="font-weight: 500; margin-bottom: 0.25rem;">Member Since</div>
+                                    <div style="color: var(--text-secondary); font-size: 0.9rem;">December 2024</div>
+                                </div>
+                                
+                                <div style="margin-bottom: 1rem;">
+                                    <div style="font-weight: 500; margin-bottom: 0.25rem;">Last Login</div>
+                                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Today at 2:45 PM</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Section -->
+            <div class="content-section" id="support-section">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showSection('dashboard')">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span>Support</span>
+                </div>
+                
+                <div class="page-header">
+                    <h1 class="page-title">Support Center</h1>
+                    <p class="page-subtitle">Get help and find answers to your questions</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Contact Support</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="form-label">Subject</label>
+                                <input type="text" class="form-input" placeholder="Describe your issue briefly">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Category</label>
+                                <select class="form-input">
+                                    <option>Technical Issue</option>
+                                    <option>Billing Question</option>
+                                    <option>Feature Request</option>
+                                    <option>General Inquiry</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Priority</label>
+                                <select class="form-input">
+                                    <option>Low</option>
+                                    <option>Medium</option>
+                                    <option>High</option>
+                                    <option>Critical</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-input" rows="4" placeholder="Please provide detailed information about your issue or question..."></textarea>
+                            </div>
+                            
+                            <button class="btn btn-primary" style="width: 100%;">Submit Ticket</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Quick Help</h3>
+                        </div>
+                        <div class="card-body">
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div style="padding: 1rem; background: var(--light-color); border-radius: 8px; border-left: 4px solid var(--warning-color);">
+                                    <div style="font-weight: 600; margin-bottom: 0.5rem;">🎥 Video Tutorials</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Step-by-step video guides</div>
+                                    <button class="btn btn-outline">Watch Videos</button>
+                                </div>
+                                
+                                <div style="padding: 1rem; background: var(--light-color); border-radius: 8px; border-left: 4px solid var(--danger-color);">
+                                    <div style="font-weight: 600; margin-bottom: 0.5rem;">📞 Emergency Support</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem;">For critical issues (Enterprise only)</div>
+                                    <button class="btn btn-secondary">Call Support</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Recent Support Tickets</h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <th style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Ticket ID</th>
+                                        <th style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Subject</th>
+                                        <th style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Date</th>
+                                        <th style="text-align: center; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Priority</th>
+                                        <th style="text-align: center; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 0.75rem; font-family: monospace;">#12847</td>
+                                        <td style="padding: 0.75rem;">API rate limit increase request</td>
+                                        <td style="padding: 0.75rem;">Feb 15, 2025</td>
+                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status" style="background: rgba(245, 158, 11, 0.1); color: var(--warning-color);">Medium</span></td>
+                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status status-active">Open</span></td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 0.75rem; font-family: monospace;">#12832</td>
+                                        <td style="padding: 0.75rem;">Webhook endpoint configuration</td>
+                                        <td style="padding: 0.75rem;">Feb 12, 2025</td>
+                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color);">Low</span></td>
+                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status" style="background: rgba(34, 197, 94, 0.1); color: var(--success-color);">Resolved</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 0.75rem; font-family: monospace;">#12801</td>
+                                        <td style="padding: 0.75rem;">Billing discrepancy inquiry</td>
+                                        <td style="padding: 0.75rem;">Feb 08, 2025</td>
+                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status" style="background: rgba(239, 68, 68, 0.1); color: var(--danger-color);">High</span></td>
+                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status" style="background: rgba(34, 197, 94, 0.1); color: var(--success-color);">Resolved</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Application State
+        let currentUser = null;
+        let currentSection = 'dashboard';
+        let apiKeys = [
+            {
+                id: 1,
+                name: 'Production API Key',
+                key: 'sk-proj-abc123def456ghi789jkl012mno345pqr678stu901vwx234yz567890',
+                service: 'Professional Plan',
+                status: 'active',
+                created: '2025-01-15',
+                lastUsed: '2025-02-18'
+            },
+            {
+                id: 2,
+                name: 'Development API Key',
+                key: 'sk-proj-dev789xyz456abc123def789ghi456jkl123mno789pqr456stu123',
+                service: 'Professional Plan',
+                status: 'active',
+                created: '2025-02-01',
+                lastUsed: '2025-02-17'
+            }
+        ];
+
+        // Authentication Functions
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            if (username === 'admin' && password === 'password123') {
+                currentUser = { username: 'admin', name: 'Admin User', role: 'Administrator' };
+                
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                
+                loadApiKeys();
+                showToast('Welcome back! Login successful.', 'success');
+            } else {
+                errorDiv.classList.remove('hidden');
+                setTimeout(() => errorDiv.classList.add('hidden'), 3000);
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('loginOverlay').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'none';
+            
+            // Reset form
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            
+            // Reset to dashboard section
+            showSection('dashboard');
+            
+            showToast('Successfully logged out', 'success');
+        }
+
+        // Navigation Functions
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active state from nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName + '-section').classList.add('active');
+            
+            // Add active state to corresponding nav item
+            event.target?.classList.add('active');
+            
+            currentSection = sectionName;
+            
+            // Load section-specific data
+            if (sectionName === 'api-keys') {
+                loadApiKeys();
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // API Key Management
+        function loadApiKeys() {
+            const container = document.getElementById('apiKeysList');
+            
+            if (apiKeys.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔑</div>
+                        <h3 style="margin-bottom: 0.5rem;">No API Keys Yet</h3>
+                        <p>Generate your first API key to get started with our services.</p>
+                        <button class="btn btn-primary" onclick="generateApiKey()" style="margin-top: 1rem;">Generate API Key</button>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = apiKeys.map(key => `
+                <div class="api-key-item">
+                    <div class="api-key-header">
+                        <div>
+                            <div class="api-key-name">${key.name}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                                Service: ${key.service}
+                            </div>
+                        </div>
+                        <span class="api-key-status ${key.status === 'active' ? 'status-active' : ''}">${key.status}</span>
+                    </div>
+                    
+                    <div class="api-key-value">${key.key}</div>
+                    
+                    <div class="api-key-meta">
+                        <div>
+                            <div><strong>Created:</strong> ${formatDate(key.created)}</div>
+                            <div><strong>Last used:</strong> ${formatDate(key.lastUsed)}</div>
+                        </div>
+                        <div class="api-key-actions">
+                            <button class="btn btn-outline" onclick="copyToClipboard('${key.key}')">Copy</button>
+                            <button class="btn btn-secondary" onclick="regenerateApiKey(${key.id})">Regenerate</button>
+                            <button class="btn btn-danger" onclick="revokeApiKey(${key.id})">Revoke</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function generateApiKey() {
+            const keyCount = apiKeys.length + 1;
+            const newKey = {
+                id: Date.now(),
+                name: `API Key ${keyCount}`,
+                key: generateRandomApiKey(),
+                service: 'Professional Plan',
+                status: 'active',
+                created: new Date().toISOString().split('T')[0],
+                lastUsed: 'Never'
+            };
+            
+            apiKeys.unshift(newKey);
+            loadApiKeys();
+            showToast('New API key generated successfully!', 'success');
+        }
+
+        function generateRandomApiKey() {
+            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let key = 'sk-proj-';
+            for (let i = 0; i < 56; i++) {
+                key += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return key;
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('API key copied to clipboard!', 'success');
+            }).catch(() => {
+                showToast('Failed to copy API key', 'error');
+            });
+        }
+
+        function regenerateApiKey(keyId) {
+            if (confirm('Are you sure you want to regenerate this API key? The old key will no longer work.')) {
+                const keyIndex = apiKeys.findIndex(key => key.id === keyId);
+                if (keyIndex !== -1) {
+                    apiKeys[keyIndex].key = generateRandomApiKey();
+                    apiKeys[keyIndex].lastUsed = 'Never';
+                    loadApiKeys();
+                    showToast('API key regenerated successfully!', 'success');
+                }
+            }
+        }
+
+        function revokeApiKey(keyId) {
+            if (confirm('Are you sure you want to revoke this API key? This action cannot be undone.')) {
+                apiKeys = apiKeys.filter(key => key.id !== keyId);
+                loadApiKeys();
+                showToast('API key revoked successfully', 'success');
+            }
+        }
+
+        // Service Management
+        function purchaseService(serviceName, price) {
+            if (confirm(`Purchase ${serviceName} plan for ${price}/month?`)) {
+                showToast(`Successfully purchased ${serviceName} plan! Your new service is now active.`, 'success');
+                
+                // Auto-generate API key for new service
+                setTimeout(() => {
+                    if (currentSection !== 'api-keys') {
+                        showSection('api-keys');
+                    }
+                    generateApiKey();
+                }, 1500);
+            }
+        }
+
+        // User Interface Functions
+        function showUserMenu() {
+            // This would typically show a dropdown menu
+            showToast('User menu clicked - would show dropdown', 'success');
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => toast.classList.add('show'), 100);
+            
+            // Remove toast after 4 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // Utility Functions
+        function formatDate(dateString) {
+            if (dateString === 'Never') return 'Never';
+            
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-focus username field
+            document.getElementById('username')?.focus();
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                const sidebar = document.getElementById('sidebar');
+                const menuToggle = document.querySelector('.menu-toggle');
+                
+                if (window.innerWidth <= 1024 && 
+                    !sidebar.contains(event.target) && 
+                    !menuToggle.contains(event.target) && 
+                    sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open');
+                }
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                const sidebar = document.getElementById('sidebar');
+                if (window.innerWidth > 1024) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            // Ctrl/Cmd + K to focus search
+            if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+                event.preventDefault();
+                document.querySelector('.search-input')?.focus();
+            }
+            
+            // ESC to close mobile sidebar
+            if (event.key === 'Escape') {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html> 
