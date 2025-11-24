@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Dashboard - Admin Panel</title>
     <link rel="stylesheet" href="./css/index.css">
 </head>
+
 <body>
     <!-- Login Overlay -->
     <div class="login-overlay" id="loginOverlay">
@@ -15,27 +17,30 @@
                 <h1 class="login-title">Welcome Back</h1>
                 <p class="login-subtitle">Sign in to your dashboard</p>
             </div>
-            
+
             <form onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label class="form-label" for="username">Username</label>
-                    <input class="form-input" type="text" id="username" name="username" placeholder="Enter your username" required>
+                    <input class="form-input" type="text" id="username" name="username"
+                        placeholder="Enter your username" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="form-label" for="password">Password</label>
-                    <input class="form-input" type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <input class="form-input" type="password" id="password" name="password"
+                        placeholder="Enter your password" required>
                 </div>
-                
+
                 <button type="submit" class="btn btn-primary">
                     Sign In
                 </button>
             </form>
-            
-            <div id="loginError" class="toast error hidden" style="position: relative; top: auto; right: auto; transform: none; margin-top: 1rem;">
+
+            <div id="loginError" class="toast error hidden"
+                style="position: relative; top: auto; right: auto; transform: none; margin-top: 1rem;">
                 Invalid credentials. Please try again.
             </div>
-            
+
             <p style="text-align: center; margin-top: 1.5rem; color: var(--text-secondary); font-size: 0.9rem;">
                 <!-- Demo credentials: <strong>admin</strong> / <strong>password123</strong> -->
             </p>
@@ -53,13 +58,13 @@
                     <input type="text" class="search-input" placeholder="Search...">
                 </div>
             </div>
-            
+
             <div class="header-right">
                 <div class="notifications">
                     <span style="font-size: 1.2rem; cursor: pointer;">🔔</span>
                     <div class="notification-badge">3</div>
                 </div>
-                
+
                 <div class="user-menu" onclick="showUserMenu()">
                     <div class="user-avatar">A</div>
                     <div>
@@ -79,7 +84,7 @@
                     <span>AdminPanel</span>
                 </div>
             </div>
-            
+
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <div class="nav-section-title">Main</div>
@@ -96,7 +101,7 @@
                         <span>API Keys</span>
                     </button>
                 </div>
-                
+
                 <div class="nav-section">
                     <div class="nav-section-title">Management</div>
                     <button class="nav-item" onclick="showSection('analytics')">
@@ -112,7 +117,7 @@
                         <span>Settings</span>
                     </button>
                 </div>
-                
+
                 <div class="nav-section">
                     <div class="nav-section-title">Account</div>
                     <button class="nav-item" onclick="showSection('profile')">
@@ -140,7 +145,7 @@
                     <span class="breadcrumb-separator">/</span>
                     <span>Dashboard</span>
                 </div>
-                
+
                 <div class="page-header">
                     <h1 class="page-title">Dashboard Overview</h1>
                     <p class="page-subtitle">Welcome back! Here's what's happening with your services.</p>
@@ -155,7 +160,7 @@
                             <span>+12.5% from yesterday</span>
                         </div>
                     </div>
-                    
+
                     <div class="stat-card">
                         <div class="stat-value">₹2,890</div>
                         <div class="stat-label">Monthly Revenue</div>
@@ -164,7 +169,7 @@
                             <span>+8.2% from last month</span>
                         </div>
                     </div>
-                    
+
                     <div class="stat-card">
                         <div class="stat-value">5</div>
                         <div class="stat-label">Active Services</div>
@@ -173,7 +178,7 @@
                             <span>+2 this month</span>
                         </div>
                     </div>
-                    
+
                     <div class="stat-card">
                         <div class="stat-value">99.9%</div>
                         <div class="stat-label">Uptime</div>
@@ -191,31 +196,37 @@
                         </div>
                         <div class="card-body">
                             <div style="space-y: 1rem;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border-color);">
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border-color);">
                                     <div>
                                         <div style="font-weight: 500;">New API key generated</div>
-                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Professional API service</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Professional API
+                                            service</div>
                                     </div>
                                     <div style="font-size: 0.8rem; color: var(--text-secondary);">2 hours ago</div>
                                 </div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border-color);">
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border-color);">
                                     <div>
                                         <div style="font-weight: 500;">Service upgraded</div>
-                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Basic → Professional</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Basic →
+                                            Professional</div>
                                     </div>
                                     <div style="font-size: 0.8rem; color: var(--text-secondary);">1 day ago</div>
                                 </div>
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
                                     <div>
                                         <div style="font-weight: 500;">Payment processed</div>
-                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">₹99.00 for Professional plan</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">₹99.00 for
+                                            Professional plan</div>
                                     </div>
                                     <div style="font-size: 0.8rem; color: var(--text-secondary);">3 days ago</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Quick Actions</h3>
@@ -241,7 +252,7 @@
             </div>
 
             <!-- Services Section -->
-            <div class="content-section" id="services-section">
+            <!-- <div class="content-section" id="services-section">
                 <div class="breadcrumb">
                     <a href="#" onclick="showSection('dashboard')">Home</a>
                     <span class="breadcrumb-separator">/</span>
@@ -308,7 +319,158 @@
                         <button class="btn btn-primary" onclick="purchaseService('enterprise', 499)">Contact Sales</button>
                     </div>
                 </div>
+            </div> -->
+
+
+
+            <div class="content-section" id="services-section">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showSection('dashboard')">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span>Services</span>
+                </div>
+
+                <div class="page-header">
+                    <h1 class="page-title">Reynrel Hosting Packages</h1>
+                    <p class="page-subtitle">Build your online presence with ease</p>
+                </div>
+
+                <div class="services-grid"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div class="service-card"
+                        style="background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.3s;">
+                        <div class="service-header">
+                            <h3 class="service-title"
+                                style="font-size: 1.5rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">
+                                Website + Hosting Package</h3>
+                            <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">(1 Year)</p>
+                        </div>
+                        <div class="service-price"
+                            style="font-size: 2.5rem; font-weight: 700; color: #0066cc; margin: 1rem 0;">
+                            ₹13,360<span style="font-size: 1rem; font-weight: normal; color: #666;">/year</span>
+                        </div>
+                        <div class="service-description" style="color: #555; margin-bottom: 1.5rem; line-height: 1.6;">
+                            Everything you need to launch a professional, secure, and high-performing website.
+                        </div>
+                        <ul class="service-features" style="list-style: none; padding: 0; margin: 1.5rem 0;">
+                            <li style="padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; color: #333;">✓ Custom
+                                Website Design (Responsive & SEO-optimized)</li>
+                            <li style="padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; color: #333;">✓ 1-Year Fast
+                                & Secure Hosting</li>
+                            <li style="padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; color: #333;">✓ Free Domain
+                                Registration (First year)</li>
+                            <li style="padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; color: #333;">✓ SSL
+                                Certificate (HTTPS Protection)</li>
+                            <li style="padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; color: #333;">✓ Maintenance
+                                & Support</li>
+                            <li style="padding: 0.6rem 0; color: #333;">✓ Professional Email Setup</li>
+                            <li style="padding: 0.6rem 0; color: #333;">✓ Free SMS integrations</li>
+                        </ul>
+
+                        <button class="btn btn-primary" onclick="purchaseService('website-hosting-1yr', 13360)"
+                            style="width: 100%; padding: 1rem; background: #0066cc; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.3s;">
+                          <a href="https://reynrel.mojo.page/reynrel-website-hosting-package"  >Choose This Package</a>  
+                        </button>
+                    </div>
+
+                    <div class="service-card"
+                        style="background: white; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 16px rgba(0,102,204,0.2); border: 2px solid #0066cc; position: relative; transform: scale(1.02);">
+                        <div
+                            style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #0066cc; color: white; padding: 0.5rem 1.5rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px;">
+                            BEST VALUE
+                        </div>
+                        <div class="service-header" style="margin-top: 1rem;">
+                            <h3 class="service-title"
+                                style="font-size: 1.5rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">
+                                Website + Application + Hosting</h3>
+                            <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">(1 Year)</p>
+                        </div>
+                        <div class="service-price"
+                            style="font-size: 2.5rem; font-weight: 700; color: #0066cc; margin: 1rem 0;">
+                            ₹24,600<span style="font-size: 1rem; font-weight: normal; color: #666;">/year</span>
+                        </div>
+                        <div
+                            style="background: #e6f2ff; padding: 0.8rem; border-radius: 6px; margin: 1rem 0; text-align: center;">
+                            <span style="color: #0066cc; font-weight: 600; font-size: 0.9rem;">Save more! 2 Years for
+                                ₹49,200</span>
+                        </div>
+                        <div class="service-description" style="color: #555; margin-bottom: 1.5rem; line-height: 1.6;">
+                            Complete solution with custom web application development plus all website features.
+                        </div>
+                        <ul class="service-features" style="list-style: none; padding: 0; margin: 1.5rem 0;">
+                            <li
+                                style="padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; color: #333; font-weight: 600;">
+                                ✓ Everything in Website + Hosting Package</li>
+                            <li
+                                style="padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; color: #0066cc; font-weight: 600;">
+                                ✓ Custom Web Application Development</li>
+                            <li style="padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; color: #333;">✓ Custom
+                                Website Design (Responsive & SEO-optimized)</li>
+                            <li style="padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; color: #333;">✓ 1-Year
+                                Premium Hosting</li>
+                            <li style="padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; color: #333;">✓ Free Domain
+                                Registration</li>
+                            <li style="padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; color: #333;">✓ SSL
+                                Certificate & Security</li>
+                            <li style="padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0; color: #333;">✓ Priority
+                                Maintenance & Support</li>
+                            <li style="padding: 0.6rem 0; color: #333;">✓ Professional Email Accounts</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="purchaseService('website-app-hosting-1yr', 24600)"
+                            style="width: 100%; padding: 1rem; background: #0066cc; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background 0.3s;">
+                          <a href="https://reynrel.mojo.page/reynrel-website-application-hosting"  >  
+                            Get Started Today</a>
+                        </button>
+                        <button class="btn" onclick="purchaseService('website-app-hosting-2yr', 49200)"
+                            style="width: 100%; padding: 0.8rem; background: white; color: #0066cc; border: 2px solid #0066cc; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 0.8rem; transition: all 0.3s;">
+                            <a href="https://reynrel.mojo.page/reynrel-website-application-hosting"  >   Choose 2-Year Plan</a>
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; text-align: center; color: white;">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">Need a Custom Solution?</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.95;">Contact our team for enterprise
+                        solutions and custom requirements</p>
+                    <button onclick="contactSales()"
+                        style="padding: 1rem 2.5rem; background: white; color: #667eea; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.3s;">
+                        Contact Sales Team
+                    </button>
+                </div>
             </div>
+
+            <style>
+                .service-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+                }
+
+                .btn:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+                }
+
+                button:hover {
+                    opacity: 0.9;
+                }
+            </style>
+
+            <script>
+                function purchaseService(packageName, price) {
+                    alert(`You selected: ${packageName}\nPrice: ₹${price.toLocaleString('en-IN')}\n\nRedirecting to checkout...`);
+                    // Add your purchase logic here
+                }
+
+                function contactSales() {
+                    alert('Redirecting to contact page...');
+                    // Add your contact logic here
+                }
+            </script>
+
+
+
+
 
             <!-- API Keys Section -->
             <div class="content-section" id="api-keys-section">
@@ -317,7 +479,7 @@
                     <span class="breadcrumb-separator">/</span>
                     <span>API Keys</span>
                 </div>
-                
+
                 <div class="page-header">
                     <h1 class="page-title">API Keys Management</h1>
                     <p class="page-subtitle">Generate and manage your API keys for service access</p>
@@ -345,7 +507,7 @@
                     <span class="breadcrumb-separator">/</span>
                     <span>Analytics</span>
                 </div>
-                
+
                 <div class="page-header">
                     <h1 class="page-title">Analytics & Insights</h1>
                     <p class="page-subtitle">Detailed insights into your API usage and performance</p>
@@ -357,18 +519,20 @@
                             <h3 class="card-title">API Usage Trends</h3>
                         </div>
                         <div class="card-body">
-                            <div style="height: 200px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); background: var(--light-color); border-radius: 8px;">
+                            <div
+                                style="height: 200px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); background: var(--light-color); border-radius: 8px;">
                                 📈 Usage Chart Placeholder
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Response Times</h3>
                         </div>
                         <div class="card-body">
-                            <div style="height: 200px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); background: var(--light-color); border-radius: 8px;">
+                            <div
+                                style="height: 200px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); background: var(--light-color); border-radius: 8px;">
                                 ⚡ Performance Chart Placeholder
                             </div>
                         </div>
@@ -380,9 +544,11 @@
                         <h3 class="card-title">Usage Statistics</h3>
                     </div>
                     <div class="card-body">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
                             <div style="text-align: center;">
-                                <div style="font-size: 2rem; font-weight: 700; color: var(--primary-color);">847,392</div>
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--primary-color);">847,392
+                                </div>
                                 <div style="color: var(--text-secondary);">Total Requests</div>
                             </div>
                             <div style="text-align: center;">
@@ -409,7 +575,7 @@
                     <span class="breadcrumb-separator">/</span>
                     <span>Billing</span>
                 </div>
-                
+
                 <div class="page-header">
                     <h1 class="page-title">Billing & Payments</h1>
                     <p class="page-subtitle">Manage your subscription and payment methods</p>
@@ -422,12 +588,14 @@
                                 <h3 class="card-title">Current Subscription</h3>
                             </div>
                             <div class="card-body">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <div
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                                     <div>
                                         <div style="font-size: 1.25rem; font-weight: 600;">Professional Plan</div>
                                         <div style="color: var(--text-secondary);">Active until March 18, 2025</div>
                                     </div>
-                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">₹99/month</div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">
+                                        ₹99/month</div>
                                 </div>
                                 <div style="display: flex; gap: 1rem;">
                                     <button class="btn btn-outline">Change Plan</button>
@@ -435,7 +603,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Payment History</h3>
@@ -445,30 +613,44 @@
                                     <table style="width: 100%; border-collapse: collapse;">
                                         <thead>
                                             <tr style="border-bottom: 1px solid var(--border-color);">
-                                                <th style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Date</th>
-                                                <th style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Description</th>
-                                                <th style="text-align: right; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Amount</th>
-                                                <th style="text-align: center; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Status</th>
+                                                <th
+                                                    style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+                                                    Date</th>
+                                                <th
+                                                    style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+                                                    Description</th>
+                                                <th
+                                                    style="text-align: right; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+                                                    Amount</th>
+                                                <th
+                                                    style="text-align: center; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+                                                    Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr style="border-bottom: 1px solid var(--border-color);">
                                                 <td style="padding: 0.75rem;">Feb 18, 2025</td>
                                                 <td style="padding: 0.75rem;">Professional Plan - Monthly</td>
-                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">₹99.00</td>
-                                                <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status status-active">Paid</span></td>
+                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">
+                                                    ₹99.00</td>
+                                                <td style="padding: 0.75rem; text-align: center;"><span
+                                                        class="api-key-status status-active">Paid</span></td>
                                             </tr>
                                             <tr style="border-bottom: 1px solid var(--border-color);">
                                                 <td style="padding: 0.75rem;">Jan 18, 2025</td>
                                                 <td style="padding: 0.75rem;">Professional Plan - Monthly</td>
-                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">₹99.00</td>
-                                                <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status status-active">Paid</span></td>
+                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">
+                                                    ₹99.00</td>
+                                                <td style="padding: 0.75rem; text-align: center;"><span
+                                                        class="api-key-status status-active">Paid</span></td>
                                             </tr>
                                             <tr>
                                                 <td style="padding: 0.75rem;">Dec 18, 2024</td>
                                                 <td style="padding: 0.75rem;">Starter Plan - Monthly</td>
-                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">₹29.00</td>
-                                                <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status status-active">Paid</span></td>
+                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">
+                                                    ₹29.00</td>
+                                                <td style="padding: 0.75rem; text-align: center;"><span
+                                                        class="api-key-status status-active">Paid</span></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -476,7 +658,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div>
                         <div class="card" style="margin-bottom: 2rem;">
                             <div class="card-header">
@@ -488,29 +670,35 @@
                                         <span>API Requests</span>
                                         <span>73,847 / 100,000</span>
                                     </div>
-                                    <div style="background: var(--border-color); height: 8px; border-radius: 4px; overflow: hidden;">
-                                        <div style="background: var(--primary-color); height: 100%; width: 73.8%; border-radius: 4px;"></div>
+                                    <div
+                                        style="background: var(--border-color); height: 8px; border-radius: 4px; overflow: hidden;">
+                                        <div
+                                            style="background: var(--primary-color); height: 100%; width: 73.8%; border-radius: 4px;">
+                                        </div>
                                     </div>
                                 </div>
-                                
+
                                 <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
                                     You've used 73.8% of your monthly quota
                                 </div>
-                                
+
                                 <button class="btn btn-outline" style="width: 100%;">Upgrade Plan</button>
                             </div>
                         </div>
-                        
+
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Payment Method</h3>
                             </div>
                             <div class="card-body">
                                 <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                    <div style="width: 40px; height: 25px; background: var(--primary-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7rem; font-weight: bold;">VISA</div>
+                                    <div
+                                        style="width: 40px; height: 25px; background: var(--primary-color); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7rem; font-weight: bold;">
+                                        VISA</div>
                                     <div>
                                         <div style="font-weight: 500;">•••• •••• •••• 4242</div>
-                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Expires 12/27</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Expires 12/27
+                                        </div>
                                     </div>
                                 </div>
                                 <button class="btn btn-outline" style="width: 100%;">Update Payment Method</button>
@@ -527,7 +715,7 @@
                     <span class="breadcrumb-separator">/</span>
                     <span>Settings</span>
                 </div>
-                
+
                 <div class="page-header">
                     <h1 class="page-title">Settings</h1>
                     <p class="page-subtitle">Manage your account preferences and configurations</p>
@@ -547,7 +735,7 @@
                                     <option>Aggressive (200 requests/minute)</option>
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Default Response Format</label>
                                 <select class="form-input">
@@ -556,17 +744,17 @@
                                     <option>CSV</option>
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">
                                     <input type="checkbox" style="margin-right: 0.5rem;"> Enable API versioning
                                 </label>
                             </div>
-                            
+
                             <button class="btn btn-primary">Save API Settings</button>
                         </div>
                     </div>
-                    
+
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Security Settings</h3>
@@ -574,38 +762,40 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label class="form-label">
-                                    <input type="checkbox" style="margin-right: 0.5rem;" checked> Two-factor authentication
+                                    <input type="checkbox" style="margin-right: 0.5rem;" checked> Two-factor
+                                    authentication
                                 </label>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">
                                     <input type="checkbox" style="margin-right: 0.5rem;" checked> Login notifications
                                 </label>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">
                                     <input type="checkbox" style="margin-right: 0.5rem;"> IP whitelist restriction
                                 </label>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Session timeout (minutes)</label>
                                 <input type="number" class="form-input" value="30" min="5" max="480">
                             </div>
-                            
+
                             <button class="btn btn-primary">Save Security Settings</button>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="card" style="margin-top: 2rem;">
                     <div class="card-header">
                         <h3 class="card-title">Notification Preferences</h3>
                     </div>
                     <div class="card-body">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
                             <div>
                                 <h4 style="margin-bottom: 1rem; font-weight: 600;">Email Notifications</h4>
                                 <div class="form-group">
@@ -615,7 +805,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">
-                                        <input type="checkbox" style="margin-right: 0.5rem;" checked> Billing notifications
+                                        <input type="checkbox" style="margin-right: 0.5rem;" checked> Billing
+                                        notifications
                                     </label>
                                 </div>
                                 <div class="form-group">
@@ -624,12 +815,13 @@
                                     </label>
                                 </div>
                             </div>
-                            
+
                             <div>
                                 <h4 style="margin-bottom: 1rem; font-weight: 600;">API Alerts</h4>
                                 <div class="form-group">
                                     <label class="form-label">
-                                        <input type="checkbox" style="margin-right: 0.5rem;" checked> Rate limit warnings
+                                        <input type="checkbox" style="margin-right: 0.5rem;" checked> Rate limit
+                                        warnings
                                     </label>
                                 </div>
                                 <div class="form-group">
@@ -644,7 +836,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <button class="btn btn-primary" style="margin-top: 1rem;">Save Notification Preferences</button>
                     </div>
                 </div>
@@ -657,7 +849,7 @@
                     <span class="breadcrumb-separator">/</span>
                     <span>Profile</span>
                 </div>
-                
+
                 <div class="page-header">
                     <h1 class="page-title">Profile Settings</h1>
                     <p class="page-subtitle">Manage your personal information and preferences</p>
@@ -674,33 +866,33 @@
                                     <label class="form-label">First Name</label>
                                     <input type="text" class="form-input" value="John">
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="form-label">Last Name</label>
                                     <input type="text" class="form-input" value="Administrator">
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Email Address</label>
                                 <input type="email" class="form-input" value="admin@example.com">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Company</label>
                                 <input type="text" class="form-input" value="Tech Solutions Inc.">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Job Title</label>
                                 <input type="text" class="form-input" value="System Administrator">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Phone Number</label>
                                 <input type="tel" class="form-input" value="+1 (555) 123-4567">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Timezone</label>
                                 <select class="form-input">
@@ -709,23 +901,27 @@
                                     <option>UTC+00:00 (Greenwich Mean Time)</option>
                                 </select>
                             </div>
-                            
+
                             <button class="btn btn-primary">Update Profile</button>
                         </div>
                     </div>
-                    
+
                     <div>
                         <div class="card" style="margin-bottom: 2rem;">
                             <div class="card-header">
                                 <h3 class="card-title">Profile Picture</h3>
                             </div>
                             <div class="card-body" style="text-align: center;">
-                                <div class="user-avatar" style="width: 80px; height: 80px; font-size: 2rem; margin: 0 auto 1rem;">A</div>
-                                <button class="btn btn-outline" style="width: 100%; margin-bottom: 0.5rem;">Upload New Picture</button>
-                                <button class="btn" style="width: 100%; background: transparent; color: var(--danger-color);">Remove Picture</button>
+                                <div class="user-avatar"
+                                    style="width: 80px; height: 80px; font-size: 2rem; margin: 0 auto 1rem;">A</div>
+                                <button class="btn btn-outline" style="width: 100%; margin-bottom: 0.5rem;">Upload New
+                                    Picture</button>
+                                <button class="btn"
+                                    style="width: 100%; background: transparent; color: var(--danger-color);">Remove
+                                    Picture</button>
                             </div>
                         </div>
-                        
+
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Account Status</h3>
@@ -735,12 +931,12 @@
                                     <div style="font-weight: 500; margin-bottom: 0.25rem;">Account Type</div>
                                     <div style="color: var(--text-secondary); font-size: 0.9rem;">Professional</div>
                                 </div>
-                                
+
                                 <div style="margin-bottom: 1rem;">
                                     <div style="font-weight: 500; margin-bottom: 0.25rem;">Member Since</div>
                                     <div style="color: var(--text-secondary); font-size: 0.9rem;">December 2024</div>
                                 </div>
-                                
+
                                 <div style="margin-bottom: 1rem;">
                                     <div style="font-weight: 500; margin-bottom: 0.25rem;">Last Login</div>
                                     <div style="color: var(--text-secondary); font-size: 0.9rem;">Today at 2:45 PM</div>
@@ -758,7 +954,7 @@
                     <span class="breadcrumb-separator">/</span>
                     <span>Support</span>
                 </div>
-                
+
                 <div class="page-header">
                     <h1 class="page-title">Support Center</h1>
                     <p class="page-subtitle">Get help and find answers to your questions</p>
@@ -774,7 +970,7 @@
                                 <label class="form-label">Subject</label>
                                 <input type="text" class="form-input" placeholder="Describe your issue briefly">
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Category</label>
                                 <select class="form-input">
@@ -784,7 +980,7 @@
                                     <option>General Inquiry</option>
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Priority</label>
                                 <select class="form-input">
@@ -794,31 +990,38 @@
                                     <option>Critical</option>
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Description</label>
-                                <textarea class="form-input" rows="4" placeholder="Please provide detailed information about your issue or question..."></textarea>
+                                <textarea class="form-input" rows="4"
+                                    placeholder="Please provide detailed information about your issue or question..."></textarea>
                             </div>
-                            
+
                             <button class="btn btn-primary" style="width: 100%;">Submit Ticket</button>
                         </div>
                     </div>
-                    
+
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Quick Help</h3>
                         </div>
                         <div class="card-body">
                             <div style="display: flex; flex-direction: column; gap: 1rem;">
-                                <div style="padding: 1rem; background: var(--light-color); border-radius: 8px; border-left: 4px solid var(--warning-color);">
+                                <div
+                                    style="padding: 1rem; background: var(--light-color); border-radius: 8px; border-left: 4px solid var(--warning-color);">
                                     <div style="font-weight: 600; margin-bottom: 0.5rem;">🎥 Video Tutorials</div>
-                                    <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Step-by-step video guides</div>
+                                    <div
+                                        style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+                                        Step-by-step video guides</div>
                                     <button class="btn btn-outline">Watch Videos</button>
                                 </div>
-                                
-                                <div style="padding: 1rem; background: var(--light-color); border-radius: 8px; border-left: 4px solid var(--danger-color);">
+
+                                <div
+                                    style="padding: 1rem; background: var(--light-color); border-radius: 8px; border-left: 4px solid var(--danger-color);">
                                     <div style="font-weight: 600; margin-bottom: 0.5rem;">📞 Emergency Support</div>
-                                    <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem;">For critical issues (Enterprise only)</div>
+                                    <div
+                                        style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+                                        For critical issues (Enterprise only)</div>
                                     <button class="btn btn-secondary">Call Support</button>
                                 </div>
                             </div>
@@ -835,11 +1038,21 @@
                             <table style="width: 100%; border-collapse: collapse;">
                                 <thead>
                                     <tr style="border-bottom: 1px solid var(--border-color);">
-                                        <th style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Ticket ID</th>
-                                        <th style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Subject</th>
-                                        <th style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Date</th>
-                                        <th style="text-align: center; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Priority</th>
-                                        <th style="text-align: center; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">Status</th>
+                                        <th
+                                            style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+                                            Ticket ID</th>
+                                        <th
+                                            style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+                                            Subject</th>
+                                        <th
+                                            style="text-align: left; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+                                            Date</th>
+                                        <th
+                                            style="text-align: center; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+                                            Priority</th>
+                                        <th
+                                            style="text-align: center; padding: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+                                            Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -847,22 +1060,33 @@
                                         <td style="padding: 0.75rem; font-family: monospace;">#12847</td>
                                         <td style="padding: 0.75rem;">API rate limit increase request</td>
                                         <td style="padding: 0.75rem;">Feb 15, 2025</td>
-                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status" style="background: rgba(245, 158, 11, 0.1); color: var(--warning-color);">Medium</span></td>
-                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status status-active">Open</span></td>
+                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status"
+                                                style="background: rgba(245, 158, 11, 0.1); color: var(--warning-color);">Medium</span>
+                                        </td>
+                                        <td style="padding: 0.75rem; text-align: center;"><span
+                                                class="api-key-status status-active">Open</span></td>
                                     </tr>
                                     <tr style="border-bottom: 1px solid var(--border-color);">
                                         <td style="padding: 0.75rem; font-family: monospace;">#12832</td>
                                         <td style="padding: 0.75rem;">Webhook endpoint configuration</td>
                                         <td style="padding: 0.75rem;">Feb 12, 2025</td>
-                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color);">Low</span></td>
-                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status" style="background: rgba(34, 197, 94, 0.1); color: var(--success-color);">Resolved</span></td>
+                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status"
+                                                style="background: rgba(16, 185, 129, 0.1); color: var(--success-color);">Low</span>
+                                        </td>
+                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status"
+                                                style="background: rgba(34, 197, 94, 0.1); color: var(--success-color);">Resolved</span>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td style="padding: 0.75rem; font-family: monospace;">#12801</td>
                                         <td style="padding: 0.75rem;">Billing discrepancy inquiry</td>
                                         <td style="padding: 0.75rem;">Feb 08, 2025</td>
-                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status" style="background: rgba(239, 68, 68, 0.1); color: var(--danger-color);">High</span></td>
-                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status" style="background: rgba(34, 197, 94, 0.1); color: var(--success-color);">Resolved</span></td>
+                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status"
+                                                style="background: rgba(239, 68, 68, 0.1); color: var(--danger-color);">High</span>
+                                        </td>
+                                        <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status"
+                                                style="background: rgba(34, 197, 94, 0.1); color: var(--success-color);">Resolved</span>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -901,17 +1125,17 @@
         // Authentication Functions
         function handleLogin(event) {
             event.preventDefault();
-            
+
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const errorDiv = document.getElementById('loginError');
-            
+
             if (username === 'Jaithra' && password === 'Jaithra@785') {
                 currentUser = { username: 'admin', name: 'Admin User', role: 'Administrator' };
-                
+
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
-                
+
                 loadApiKeys();
                 showToast('Welcome back! Login successful.', 'success');
             } else {
@@ -924,14 +1148,14 @@
             currentUser = null;
             document.getElementById('loginOverlay').style.display = 'flex';
             document.getElementById('dashboard').style.display = 'none';
-            
+
             // Reset form
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
-            
+
             // Reset to dashboard section
             showSection('dashboard');
-            
+
             showToast('Successfully logged out', 'success');
         }
 
@@ -941,20 +1165,20 @@
             document.querySelectorAll('.content-section').forEach(section => {
                 section.classList.remove('active');
             });
-            
+
             // Remove active state from nav items
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
-            
+
             // Show selected section
             document.getElementById(sectionName + '-section').classList.add('active');
-            
+
             // Add active state to corresponding nav item
             event.target?.classList.add('active');
-            
+
             currentSection = sectionName;
-            
+
             // Load section-specific data
             if (sectionName === 'api-keys') {
                 loadApiKeys();
@@ -969,7 +1193,7 @@
         // API Key Management
         function loadApiKeys() {
             const container = document.getElementById('apiKeysList');
-            
+
             if (apiKeys.length === 0) {
                 container.innerHTML = `
                     <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
@@ -981,7 +1205,7 @@
                 `;
                 return;
             }
-            
+
             container.innerHTML = apiKeys.map(key => `
                 <div class="api-key-item">
                     <div class="api-key-header">
@@ -1022,7 +1246,7 @@
                 created: new Date().toISOString().split('T')[0],
                 lastUsed: 'Never'
             };
-            
+
             apiKeys.unshift(newKey);
             loadApiKeys();
             showToast('New API key generated successfully!', 'success');
@@ -1069,7 +1293,7 @@
         function purchaseService(serviceName, price) {
             if (confirm(`Purchase ₹{serviceName} plan for ₹{price}/month?`)) {
                 showToast(`Successfully purchased ₹{serviceName} plan! Your new service is now active.`, 'success');
-                
+
                 // Auto-generate API key for new service
                 setTimeout(() => {
                     if (currentSection !== 'api-keys') {
@@ -1090,12 +1314,12 @@
             const toast = document.createElement('div');
             toast.className = `toast ₹{type}`;
             toast.textContent = message;
-            
+
             document.body.appendChild(toast);
-            
+
             // Trigger animation
             setTimeout(() => toast.classList.add('show'), 100);
-            
+
             // Remove toast after 4 seconds
             setTimeout(() => {
                 toast.classList.remove('show');
@@ -1106,7 +1330,7 @@
         // Utility Functions
         function formatDate(dateString) {
             if (dateString === 'Never') return 'Never';
-            
+
             const date = new Date(dateString);
             return date.toLocaleDateString('en-US', {
                 year: 'numeric',
@@ -1116,25 +1340,25 @@
         }
 
         // Event Listeners
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Auto-focus username field
             document.getElementById('username')?.focus();
-            
+
             // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', function(event) {
+            document.addEventListener('click', function (event) {
                 const sidebar = document.getElementById('sidebar');
                 const menuToggle = document.querySelector('.menu-toggle');
-                
-                if (window.innerWidth <= 1024 && 
-                    !sidebar.contains(event.target) && 
-                    !menuToggle.contains(event.target) && 
+
+                if (window.innerWidth <= 1024 &&
+                    !sidebar.contains(event.target) &&
+                    !menuToggle.contains(event.target) &&
                     sidebar.classList.contains('open')) {
                     sidebar.classList.remove('open');
                 }
             });
-            
+
             // Handle window resize
-            window.addEventListener('resize', function() {
+            window.addEventListener('resize', function () {
                 const sidebar = document.getElementById('sidebar');
                 if (window.innerWidth > 1024) {
                     sidebar.classList.remove('open');
@@ -1143,13 +1367,13 @@
         });
 
         // Keyboard shortcuts
-        document.addEventListener('keydown', function(event) {
+        document.addEventListener('keydown', function (event) {
             // Ctrl/Cmd + K to focus search
             if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
                 event.preventDefault();
                 document.querySelector('.search-input')?.focus();
             }
-            
+
             // ESC to close mobile sidebar
             if (event.key === 'Escape') {
                 document.getElementById('sidebar').classList.remove('open');
@@ -1157,4 +1381,5 @@
         });
     </script>
 </body>
-</html> 
+
+</html>
