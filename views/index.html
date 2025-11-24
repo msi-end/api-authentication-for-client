@@ -4,720 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Dashboard - Admin Panel</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-color: #3b82f6;
-            --primary-dark: #2563eb;
-            --secondary-color: #64748b;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --dark-color: #1e293b;
-            --light-color: #f8fafc;
-            --border-color: #e2e8f0;
-            --text-primary: #0f172a;
-            --text-secondary: #64748b;
-            --sidebar-width: 280px;
-            --header-height: 70px;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background-color: var(--light-color);
-            color: var(--text-primary);
-            overflow-x: hidden;
-        }
-
-        /* Login Overlay */
-        .login-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-card {
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 420px;
-            margin: 2rem;
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .login-logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            border-radius: 15px;
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .login-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .login-subtitle {
-            color: var(--text-secondary);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.2s ease;
-            background: white;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
-            width: 100%;
-            padding: 1rem;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-
-        .btn-secondary {
-            background: var(--secondary-color);
-            color: white;
-        }
-
-        .btn-success {
-            background: var(--success-color);
-            color: white;
-        }
-
-        .btn-danger {
-            background: var(--danger-color);
-            color: white;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--border-color);
-            color: var(--text-primary);
-        }
-
-        /* Dashboard Layout */
-        .dashboard {
-            display: none;
-            min-height: 100vh;
-        }
-
-        /* Header */
-        .header {
-            height: var(--header-height);
-            background: white;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 2rem;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-primary);
-        }
-
-        .header-search {
-            position: relative;
-        }
-
-        .search-input {
-            padding: 0.5rem 1rem 0.5rem 2.5rem;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            width: 300px;
-            font-size: 0.9rem;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .notifications {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--danger-color);
-            color: white;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 0.7rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 8px;
-            transition: background-color 0.2s ease;
-        }
-
-        .user-menu:hover {
-            background: var(--light-color);
-        }
-
-        .user-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: white;
-            border-right: 1px solid var(--border-color);
-            position: fixed;
-            top: var(--header-height);
-            left: 0;
-            bottom: 0;
-            overflow-y: auto;
-            z-index: 50;
-            transition: transform 0.3s ease;
-        }
-
-        .sidebar-header {
-            padding: 2rem 1.5rem 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .sidebar-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .sidebar-logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
-
-        .sidebar-nav {
-            padding: 1rem 0;
-        }
-
-        .nav-section {
-            margin-bottom: 2rem;
-        }
-
-        .nav-section-title {
-            padding: 0 1.5rem 0.5rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1.5rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: left;
-        }
-
-        .nav-item:hover {
-            color: var(--primary-color);
-            background: rgba(59, 130, 246, 0.05);
-        }
-
-        .nav-item.active {
-            color: var(--primary-color);
-            background: rgba(59, 130, 246, 0.1);
-            border-right: 3px solid var(--primary-color);
-        }
-
-        .nav-icon {
-            font-size: 1.1rem;
-            width: 20px;
-            text-align: center;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            margin-top: var(--header-height);
-            padding: 2rem;
-            min-height: calc(100vh - var(--header-height));
-        }
-
-        .page-header {
-            margin-bottom: 2rem;
-        }
-
-        .page-title {
-            font-size: 1.875rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .page-subtitle {
-            color: var(--text-secondary);
-            font-size: 1rem;
-        }
-
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .breadcrumb a {
-            color: var(--text-secondary);
-            text-decoration: none;
-        }
-
-        .breadcrumb a:hover {
-            color: var(--primary-color);
-        }
-
-        .breadcrumb-separator {
-            color: var(--text-secondary);
-        }
-
-        /* Cards */
-        .card {
-            background: white;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .card-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .card-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .stat-change {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .stat-change.positive {
-            color: var(--success-color);
-        }
-
-        .stat-change.negative {
-            color: var(--danger-color);
-        }
-
-        /* Content Sections */
-        .content-section {
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .service-card {
-            background: white;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: all 0.2s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .service-header {
-            display: flex;
-            align-items: center;
-            justify-content: between;
-            margin-bottom: 1rem;
-        }
-
-        .service-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .service-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 0.75rem;
-        }
-
-        .service-description {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .service-features {
-            list-style: none;
-            margin-bottom: 1.5rem;
-        }
-
-        .service-features li {
-            padding: 0.25rem 0;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .service-features li::before {
-            content: '✓';
-            color: var(--success-color);
-            margin-right: 0.5rem;
-            font-weight: bold;
-        }
-
-        /* API Keys */
-        .api-key-list {
-            margin-top: 1.5rem;
-        }
-
-        .api-key-item {
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .api-key-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .api-key-name {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .api-key-status {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            text-transform: uppercase;
-        }
-
-        .status-active {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success-color);
-        }
-
-        .api-key-value {
-            background: var(--light-color);
-            padding: 0.75rem;
-            border-radius: 6px;
-            font-family: 'Monaco', 'Menlo', monospace;
-            font-size: 0.85rem;
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            word-break: break-all;
-            margin-bottom: 1rem;
-        }
-
-        .api-key-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .api-key-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            .search-input {
-                width: 200px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                padding: 0 1rem;
-            }
-
-            .main-content {
-                padding: 1rem;
-            }
-
-            .search-input {
-                width: 150px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Utilities */
-        .hidden {
-            display: none !important;
-        }
-
-        .text-success {
-            color: var(--success-color);
-        }
-
-        .text-danger {
-            color: var(--danger-color);
-        }
-
-        .text-warning {
-            color: var(--warning-color);
-        }
-
-        /* Notification Toast */
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1rem 1.5rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            z-index: 1000;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-        }
-
-        .toast.show {
-            transform: translateX(0);
-        }
-
-        .toast.success {
-            border-left: 4px solid var(--success-color);
-        }
-
-        .toast.error {
-            border-left: 4px solid var(--danger-color);
-        }
-    </style>
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
     <!-- Login Overlay -->
@@ -750,7 +37,7 @@
             </div>
             
             <p style="text-align: center; margin-top: 1.5rem; color: var(--text-secondary); font-size: 0.9rem;">
-                Demo credentials: <strong>admin</strong> / <strong>password123</strong>
+                <!-- Demo credentials: <strong>admin</strong> / <strong>password123</strong> -->
             </p>
         </div>
     </div>
@@ -870,7 +157,7 @@
                     </div>
                     
                     <div class="stat-card">
-                        <div class="stat-value">$2,890</div>
+                        <div class="stat-value">₹2,890</div>
                         <div class="stat-label">Monthly Revenue</div>
                         <div class="stat-change positive">
                             <span>↗</span>
@@ -921,7 +208,7 @@
                                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
                                     <div>
                                         <div style="font-weight: 500;">Payment processed</div>
-                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">$99.00 for Professional plan</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">₹99.00 for Professional plan</div>
                                     </div>
                                     <div style="font-size: 0.8rem; color: var(--text-secondary);">3 days ago</div>
                                 </div>
@@ -971,7 +258,7 @@
                         <div class="service-header">
                             <h3 class="service-title">Starter Plan</h3>
                         </div>
-                        <div class="service-price">$29<span style="font-size: 1rem; font-weight: normal; color: var(--text-secondary);">/month</span></div>
+                        <div class="service-price">₹29<span style="font-size: 1rem; font-weight: normal; color: var(--text-secondary);">/month</span></div>
                         <div class="service-description">Perfect for small projects and development testing</div>
                         <ul class="service-features">
                             <li>10,000 API requests/month</li>
@@ -988,7 +275,7 @@
                         <div class="service-header">
                             <h3 class="service-title">Professional</h3>
                         </div>
-                        <div class="service-price">$99<span style="font-size: 1rem; font-weight: normal; color: var(--text-secondary);">/month</span></div>
+                        <div class="service-price">₹99<span style="font-size: 1rem; font-weight: normal; color: var(--text-secondary);">/month</span></div>
                         <div class="service-description">Ideal for growing businesses and production applications</div>
                         <ul class="service-features">
                             <li>100,000 API requests/month</li>
@@ -1006,7 +293,7 @@
                         <div class="service-header">
                             <h3 class="service-title">Enterprise</h3>
                         </div>
-                        <div class="service-price">$499<span style="font-size: 1rem; font-weight: normal; color: var(--text-secondary);">/month</span></div>
+                        <div class="service-price">₹499<span style="font-size: 1rem; font-weight: normal; color: var(--text-secondary);">/month</span></div>
                         <div class="service-description">For large-scale applications with demanding requirements</div>
                         <ul class="service-features">
                             <li>Unlimited API requests</li>
@@ -1140,7 +427,7 @@
                                         <div style="font-size: 1.25rem; font-weight: 600;">Professional Plan</div>
                                         <div style="color: var(--text-secondary);">Active until March 18, 2025</div>
                                     </div>
-                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">$99/month</div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">₹99/month</div>
                                 </div>
                                 <div style="display: flex; gap: 1rem;">
                                     <button class="btn btn-outline">Change Plan</button>
@@ -1168,19 +455,19 @@
                                             <tr style="border-bottom: 1px solid var(--border-color);">
                                                 <td style="padding: 0.75rem;">Feb 18, 2025</td>
                                                 <td style="padding: 0.75rem;">Professional Plan - Monthly</td>
-                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">$99.00</td>
+                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">₹99.00</td>
                                                 <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status status-active">Paid</span></td>
                                             </tr>
                                             <tr style="border-bottom: 1px solid var(--border-color);">
                                                 <td style="padding: 0.75rem;">Jan 18, 2025</td>
                                                 <td style="padding: 0.75rem;">Professional Plan - Monthly</td>
-                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">$99.00</td>
+                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">₹99.00</td>
                                                 <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status status-active">Paid</span></td>
                                             </tr>
                                             <tr>
                                                 <td style="padding: 0.75rem;">Dec 18, 2024</td>
                                                 <td style="padding: 0.75rem;">Starter Plan - Monthly</td>
-                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">$29.00</td>
+                                                <td style="padding: 0.75rem; text-align: right; font-weight: 600;">₹29.00</td>
                                                 <td style="padding: 0.75rem; text-align: center;"><span class="api-key-status status-active">Paid</span></td>
                                             </tr>
                                         </tbody>
@@ -1619,7 +906,7 @@
             const password = document.getElementById('password').value;
             const errorDiv = document.getElementById('loginError');
             
-            if (username === 'admin' && password === 'password123') {
+            if (username === 'Jaithra' && password === 'Jaithra@785') {
                 currentUser = { username: 'admin', name: 'Admin User', role: 'Administrator' };
                 
                 document.getElementById('loginOverlay').style.display = 'none';
@@ -1699,25 +986,25 @@
                 <div class="api-key-item">
                     <div class="api-key-header">
                         <div>
-                            <div class="api-key-name">${key.name}</div>
+                            <div class="api-key-name">₹{key.name}</div>
                             <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                Service: ${key.service}
+                                Service: ₹{key.service}
                             </div>
                         </div>
-                        <span class="api-key-status ${key.status === 'active' ? 'status-active' : ''}">${key.status}</span>
+                        <span class="api-key-status ₹{key.status === 'active' ? 'status-active' : ''}">₹{key.status}</span>
                     </div>
                     
-                    <div class="api-key-value">${key.key}</div>
+                    <div class="api-key-value">₹{key.key}</div>
                     
                     <div class="api-key-meta">
                         <div>
-                            <div><strong>Created:</strong> ${formatDate(key.created)}</div>
-                            <div><strong>Last used:</strong> ${formatDate(key.lastUsed)}</div>
+                            <div><strong>Created:</strong> ₹{formatDate(key.created)}</div>
+                            <div><strong>Last used:</strong> ₹{formatDate(key.lastUsed)}</div>
                         </div>
                         <div class="api-key-actions">
-                            <button class="btn btn-outline" onclick="copyToClipboard('${key.key}')">Copy</button>
-                            <button class="btn btn-secondary" onclick="regenerateApiKey(${key.id})">Regenerate</button>
-                            <button class="btn btn-danger" onclick="revokeApiKey(${key.id})">Revoke</button>
+                            <button class="btn btn-outline" onclick="copyToClipboard('₹{key.key}')">Copy</button>
+                            <button class="btn btn-secondary" onclick="regenerateApiKey(₹{key.id})">Regenerate</button>
+                            <button class="btn btn-danger" onclick="revokeApiKey(₹{key.id})">Revoke</button>
                         </div>
                     </div>
                 </div>
@@ -1728,7 +1015,7 @@
             const keyCount = apiKeys.length + 1;
             const newKey = {
                 id: Date.now(),
-                name: `API Key ${keyCount}`,
+                name: `API Key ₹{keyCount}`,
                 key: generateRandomApiKey(),
                 service: 'Professional Plan',
                 status: 'active',
@@ -1780,8 +1067,8 @@
 
         // Service Management
         function purchaseService(serviceName, price) {
-            if (confirm(`Purchase ${serviceName} plan for ${price}/month?`)) {
-                showToast(`Successfully purchased ${serviceName} plan! Your new service is now active.`, 'success');
+            if (confirm(`Purchase ₹{serviceName} plan for ₹{price}/month?`)) {
+                showToast(`Successfully purchased ₹{serviceName} plan! Your new service is now active.`, 'success');
                 
                 // Auto-generate API key for new service
                 setTimeout(() => {
@@ -1801,7 +1088,7 @@
 
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
+            toast.className = `toast ₹{type}`;
             toast.textContent = message;
             
             document.body.appendChild(toast);

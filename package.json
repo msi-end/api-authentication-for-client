@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^5.1.0",
-    "lowdb": "^7.0.1"
+    "lowdb": "^3.0.0",
+    "nedb-promises": "^6.2.3"
   }
 }
